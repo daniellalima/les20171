@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_secure_password
   has_secure_token :authentication_token
 
+  validates :email, uniqueness: true
+
   def allow_token_to_be_used_only_once
     regenerate_authentication_token
     touch(:token_created_at)
