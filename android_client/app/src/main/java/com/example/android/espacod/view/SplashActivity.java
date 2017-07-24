@@ -30,7 +30,8 @@ public class SplashActivity extends Activity {
             public void run() {
                 finish();
                 if (mPreferences.contains("AuthToken")) {
-                    // TODO
+                    Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivityForResult(intent, 0);
                 } else {
                     Intent intent = new Intent(SplashActivity.this, WelcomeActivity.class);
                     startActivityForResult(intent, 0);

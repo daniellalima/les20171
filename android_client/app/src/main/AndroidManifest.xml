@@ -28,7 +28,9 @@
         <activity android:name=".view.WelcomeActivity"
             android:label="@string/title_activity_welcome"
             android:noHistory="true"/>
-        <activity android:name=".view.RegisterActivity" />
+        <activity android:name=".view.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:noHistory="true"/>
         <activity android:name=".view.LoginActivity"></activity>
     </application>
 
