@@ -28,4 +28,5 @@
     <string name="logout">Logout</string>
     <string name="event_title">Event Title</string>
     <string name="event_description">Event Description</string>
+    <string name="event_detail">Event Detail</string>
 </resources>

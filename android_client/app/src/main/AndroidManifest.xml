@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.espacod">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -25,13 +25,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.WelcomeActivity"
+        <activity
+            android:name=".view.WelcomeActivity"
             android:label="@string/title_activity_welcome"
-            android:noHistory="true"/>
-        <activity android:name=".view.RegisterActivity"
+            android:noHistory="true" />
+        <activity
+            android:name=".view.RegisterActivity"
             android:label="@string/title_activity_register"
-            android:noHistory="true"/>
-        <activity android:name=".view.LoginActivity"></activity>
+            android:noHistory="true" />
+        <activity android:name=".view.LoginActivity" />
+        <activity android:name=".view.EventDetailActivity"
+            android:label="@string/event_detail"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

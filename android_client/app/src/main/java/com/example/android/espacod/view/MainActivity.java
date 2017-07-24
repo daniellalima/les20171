@@ -36,77 +36,90 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static android.R.attr.category;
+import static com.example.android.espacod.R.id.fab;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     static final String EVENT_LIST_VALUES = "eventListValues";
 
-    FloatingActionButton fab;
-    boolean fb_open = false;
-    LinearLayout mFbMenu;
-    ListView mLvEvents;
+    private FloatingActionButton mFab;
+    private boolean fb_open = false;
+    private  LinearLayout mFbMenu;
+    private ListView mLvEvents;
     private List<Event> mEvents;
     private EventsAdapter mEventAdapter;
     private SharedPreferences mPreferences;
+    private Toolbar mToolbar;
+    private DrawerLayout mDrawer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        loadComponents();
+        setSupportActionBar(mToolbar);
 
-        mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
+        loadListEvents(savedInstanceState);
+        prepareActionBar();
+        setClicks();
+    }
 
-        mLvEvents = (ListView) findViewById(R.id.events_list);
-        mEvents = new ArrayList<Event>();
-
-        if (savedInstanceState != null) {
-            mEvents = savedInstanceState.getParcelableArrayList(EVENT_LIST_VALUES);
-        }
-
-        mEventAdapter = new EventsAdapter(this,  mEvents);
-        mLvEvents.setAdapter(mEventAdapter);
-
-        if (Util.isNetworkAvailable(this)) {
-            fetchEvents();
-        } else {
-            Util.showToast(this, getString(R.string.no_internet_connection));
-        }
-
-        mFbMenu = (LinearLayout) findViewById(R.id.fb_menu);
-
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+    private void setClicks() {
+        mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(fb_open) {
-                    fab.startAnimation(
+                    mFab.startAnimation(
                             AnimationUtils.loadAnimation(MainActivity.this, R.anim.back_rotate) );
                     mFbMenu.setVisibility(View.GONE);
                 } else {
-                    fab.startAnimation(
+                    mFab.startAnimation(
                             AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotate) );
                     mFbMenu.setVisibility(View.VISIBLE);
                 }
                 fb_open = !fb_open;
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
             }
         });
+    }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    private void prepareActionBar() {
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, mDrawer, mToolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawer.setDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void fetchEvents() {
+    private void loadComponents() {
+        this.mLvEvents = (ListView) findViewById(R.id.events_list);
+        this.mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        this.mFbMenu = (LinearLayout) findViewById(R.id.fb_menu);
+        this.mFab = (FloatingActionButton) findViewById(fab);
+        this.mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        this.mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
+    }
+
+    private void loadListEvents(Bundle savedInstanceState) {
+        this.mEvents = new ArrayList<>();
+
+        if (savedInstanceState != null) {
+            mEvents = savedInstanceState.getParcelableArrayList(EVENT_LIST_VALUES);
+        }
+
+        if (Util.isNetworkAvailable(this)) {
+            fetchEventsFromApi();
+        } else {
+            Util.showToast(this, getString(R.string.no_internet_connection));
+        }
+
+        mEventAdapter = new EventsAdapter(this, mEvents);
+        mLvEvents.setAdapter(mEventAdapter);
+    }
+
+    private void fetchEventsFromApi() {
         FetchEventsTask fetchEventsTask = new FetchEventsTask(MainActivity.this, MainActivity.this);
         fetchEventsTask.setMessageLoading("Loading events...");
         fetchEventsTask.setAuthToken(mPreferences.getString("AuthToken", ""));
