@@ -1,5 +1,7 @@
 package com.example.android.espacod.view;
 
+import android.app.Activity;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -66,6 +69,18 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setClicks() {
+        mLvEvents.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position,
+                                    long id) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(EVENT_LIST_VALUES, (Event) mEventAdapter.getItem(position));
+                Intent intent = new Intent(MainActivity.this, EventDetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
+
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
