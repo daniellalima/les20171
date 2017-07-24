@@ -6,12 +6,10 @@ import android.support.v7.app.AppCompatActivity;
         import android.os.Bundle;
         import android.support.design.widget.FloatingActionButton;
         import android.view.View;
-        import android.support.design.widget.NavigationView;
-        import android.support.v4.view.GravityCompat;
+import android.support.v4.view.GravityCompat;
         import android.support.v4.widget.DrawerLayout;
         import android.support.v7.app.ActionBarDrawerToggle;
-        import android.support.v7.app.AppCompatActivity;
-        import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
         import android.view.Menu;
         import android.view.MenuItem;
         import android.view.animation.AnimationUtils;
@@ -28,10 +26,16 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    static final String EVENT_LIST_VALUES = "eventListValues";
+
+    private static final int EVENT_LOADER_ID = 1;
+
     FloatingActionButton fab;
     boolean fb_open = false;
     LinearLayout mFbMenu;
     ListView mLvEvents;
+    private List<Event> mEvents;
+    private EventsAdapter mEventAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +45,14 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         mLvEvents = (ListView) findViewById(R.id.events_list);
-        List<Event> eventLists = new ArrayList<Event>();
-        eventLists.add(new Event(0,""));
-        eventLists.add(new Event(0,""));
-        eventLists.add(new Event(0,""));
-        eventLists.add(new Event(0,""));
-        mLvEvents.setAdapter(new EventsAdapter(this, eventLists));
+        mEvents = new ArrayList<Event>();
 
+        if (savedInstanceState != null) {
+            mEvents = savedInstanceState.getParcelableArrayList(EVENT_LIST_VALUES);
+        }
+
+        mEventAdapter = new EventsAdapter(this,  mEvents);
+        mLvEvents.setAdapter(mEventAdapter);
 
         mFbMenu = (LinearLayout) findViewById(R.id.fb_menu);
 
@@ -132,5 +137,11 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putParcelableArrayList(EVENT_LIST_VALUES, (ArrayList<Event>) mEvents);
+        super.onSaveInstanceState(savedInstanceState);
     }
 }
