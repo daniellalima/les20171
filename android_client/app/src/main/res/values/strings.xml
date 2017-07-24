@@ -25,4 +25,5 @@
     <string name="user_password_confirmation">Password Confirmation</string>
     <string name="register_disclaimer">Your email address will always remain private. By clicking Register you are indicating that you have read and agreed to the Terms of Service</string>
     <string name="title_activity_register">activty register</string>
+    <string name="logout">Logout</string>
 </resources>
