@@ -1,6 +1,11 @@
 package com.example.android.espacod.util;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +30,7 @@ public class Util {
         return url;
     }
 
-    public static String makeHttpRequest(URL url) throws IOException {
+    public static String makeHttpRequest(URL url, String requestMethod, String auth) throws IOException {
         String jsonResponse = "";
         if (url == null) {
             return jsonResponse;
@@ -36,10 +41,13 @@ public class Util {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setReadTimeout(10000);
             urlConnection.setConnectTimeout(15000);
-            urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestMethod(requestMethod);
+            if (auth != null) {
+                urlConnection.setRequestProperty ("Authorization", auth);
+            }
             urlConnection.connect();
 
-            if (urlConnection.getResponseCode() == 201) {
+            if (urlConnection.getResponseCode() == 201 || urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
             } else {
@@ -70,6 +78,17 @@ public class Util {
             }
         }
         return output.toString();
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
+    public static void showToast(Context context, String string) {
+        Toast.makeText(context, string, Toast.LENGTH_SHORT).show();
     }
 
 }

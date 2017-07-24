@@ -2,10 +2,11 @@ package com.example.android.espacod.adapter;
 
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
 import com.example.android.espacod.R;
 import com.example.android.espacod.model.Event;
 import java.util.List;
@@ -26,6 +27,11 @@ public class EventsAdapter extends ArrayAdapter<Event> {
                     R.layout.event_item, parent, false);
         }
 
+        TextView titleTextView = (TextView) convertView.findViewById(R.id.title_text_view);
+        titleTextView.setText(event.getmTitle());
+
+        TextView authorsTextView = (TextView) convertView.findViewById(R.id.description_text_view);
+        authorsTextView.setText(event.getmDescription());
 
         return convertView;
     }

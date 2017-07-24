@@ -19,8 +19,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URL;
 
-import static com.example.android.espacod.util.Util.LOG_TAG;
-
 public class RegisterActivity extends AppCompatActivity {
 
     private SharedPreferences mPreferences;
@@ -77,6 +75,8 @@ public class RegisterActivity extends AppCompatActivity {
         private static final String PASSWORD_PARAM = "password";
         private static final String PASSWORD_CONFIRMATION_PARAM = "password_confirmation";
 
+        private final String LOG_TAG = RegisterTask.class.getSimpleName();
+
         public RegisterTask(Context context) {
             super(context);
         }
@@ -99,19 +99,14 @@ public class RegisterActivity extends AppCompatActivity {
                     .appendQueryParameter(PASSWORD_PARAM, password)
                     .appendQueryParameter(PASSWORD_CONFIRMATION_PARAM, password_confirmation).build();
 
-
             URL url = Util.createUrl(builtUri.toString());
 
             String jsonResponse = null;
             try {
-                System.out.println(url.toString());
-                jsonResponse = Util.makeHttpRequest(url);
-                System.out.println(jsonResponse);
+                jsonResponse = Util.makeHttpRequest(url, "POST", null);
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error closing input stream", e);
             }
-
-            System.out.println(jsonResponse);
 
             if (TextUtils.isEmpty(jsonResponse)) {
                 return null;

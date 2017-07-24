@@ -11,23 +11,18 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.android.espacod.R;
 import com.example.android.espacod.util.UrlJsonAsyncTask;
 import com.example.android.espacod.util.Util;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 import java.net.URL;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
-import static com.example.android.espacod.util.Util.LOG_TAG;
 
 public class LoginActivity extends AppCompatActivity {
 
     private final static String LOGIN_API_ENDPOINT_URL = "https://infinite-bayou-64424.herokuapp.com/auth/login";
+
     private SharedPreferences mPreferences;
     private String mUserEmail;
     private String mUserPassword;
@@ -61,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 
         private static final String EMAIL_PARAM = "email";
         private static final String PASSWORD_PARAM = "password";
+        public final String LOG_TAG = LoginTask.class.getSimpleName();
 
         public LoginTask(Context context) {
             super(context);
@@ -82,16 +78,14 @@ public class LoginActivity extends AppCompatActivity {
 
             URL url = Util.createUrl(builtUri.toString());
 
+            Log.i(LOG_TAG, url.toString());
+
             String jsonResponse = null;
             try {
-                System.out.println(url.toString());
-                jsonResponse = Util.makeHttpRequest(url);
-                System.out.println(jsonResponse);
+                jsonResponse = Util.makeHttpRequest(url, "POST", null);
             } catch (IOException e) {
                 Log.e(LOG_TAG, "Error closing input stream", e);
             }
-
-            System.out.println(jsonResponse);
 
             if (TextUtils.isEmpty(jsonResponse)) {
                 return null;

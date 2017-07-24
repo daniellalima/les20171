@@ -35,6 +35,7 @@ public class UrlJsonAsyncTask extends AsyncTask<String, Void, JSONObject> {
     private int retryCount;
     private String jsonSuccess;
     private String jsonInfo;
+    private String authToken;
 
     public UrlJsonAsyncTask(Context context) {
         this.context = context;
@@ -47,6 +48,7 @@ public class UrlJsonAsyncTask extends AsyncTask<String, Void, JSONObject> {
         this.retryCount = RETRY_COUNT;
         this.jsonSuccess = JSON_SUCCESS;
         this.jsonInfo = JSON_INFO;
+        this.authToken = "";
     }
 
     @Override
@@ -99,7 +101,7 @@ public class UrlJsonAsyncTask extends AsyncTask<String, Void, JSONObject> {
         try {
             try {
                 json.put(this.jsonSuccess, false);
-                json = JsonHelper.getJsonObjectFromUrl(url, this.timeoutConnect, this.timeoutRead);
+                json = JsonHelper.getJsonObjectFromUrl(url, this.timeoutConnect, this.timeoutRead, authToken);
             } catch (SocketTimeoutException e) {
                 if (retries-- > 0) {
                     json = queryUrlForJson(url);
@@ -198,5 +200,13 @@ public class UrlJsonAsyncTask extends AsyncTask<String, Void, JSONObject> {
 
     public void setJsonInfo(String jsonInfo) {
         this.jsonInfo = jsonInfo;
+    }
+
+    public void setAuthToken(String authToken) {
+        this.authToken = authToken;
+    }
+
+    public String getAuthToken() {
+        return authToken;
     }
 }
