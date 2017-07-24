@@ -62,25 +62,20 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         loadComponents();
         setSupportActionBar(mToolbar);
-
         loadListEvents(savedInstanceState);
-        prepareActionBar();
         setClicks();
-    }
+        prepareActionBar();
 
-    private void setClicks() {
         mLvEvents.setOnItemClickListener(new AdapterView.OnItemClickListener(){
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(EVENT_LIST_VALUES, (Event) mEventAdapter.getItem(position));
-                Intent intent = new Intent(MainActivity.this, EventDetailActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+
             }
         });
+    }
 
+    private void setClicks() {
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
