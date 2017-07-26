@@ -70,6 +70,11 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("event", (Event) mEventAdapter.getItem(position));
+                Intent intent = new Intent(MainActivity.this, EventDetailActivity.class);
+                intent.putExtras(bundle);
+                startActivity(intent);
 
             }
         });
