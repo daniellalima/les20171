@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Espaço D</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Configurações</string>
+    <string name="events">Eventos</string>
+    <string name="favorites">Favoritos</string>
+    <string name="my_events">Meus eventos</string>
+    <string name="all_events">Todos os eventos</string>
+    <string name="share">Share</string>
+    <string name="contact">Contato</string>
+    <string name="about">Sobre</string>
+    <string name="no_internet_connection">Sem conexão com internet.</string>
+    <string name="welcome_title">Espaço D</string>
+    <string name="welcome_text">Bem-vindo(a) ao Espaço D. Aqui você encontrará os melhores eventos da área de Design acontecendo em sua região.</string>
+    <string name="register">Registrar</string>
+    <string name="login">Entrar</string>
+    <string name="title_activity_welcome">Bem-Vindo</string>
+    <string name="user_email">E-mail</string>
+    <string name="user_password">Senha</string>
+    <string name="user_name">Nome</string>
+    <string name="user_password_confirmation">Confirmação de Senha</string>
+    <string name="register_disclaimer">Seu endereço de email sempre permanecerá privado. Ao clicar em Registrar, você está indicando que você leu e concordou com os Termos de Serviço</string>
+    <string name="title_activity_register">Registro</string>
+    <string name="logout">Sair</string>
+    <string name="event_title">Título</string>
+    <string name="event_description">Descrição</string>
+    <string name="event_detail">Detalhes do Evento</string>
+</resources>
