@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
             } else {
                 // everything is ok!
                 RegisterTask registerTask = new RegisterTask(RegisterActivity.this);
-                registerTask.setMessageLoading("Registering new account...");
+                registerTask.setMessageLoading("Registrando nova conta...");
 
                 registerTask.execute(new String[] {mUserName, mUserEmail, mUserPassword, mUserPasswordConfirmation});
             }

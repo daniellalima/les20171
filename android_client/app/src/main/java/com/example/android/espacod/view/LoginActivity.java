@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         } else {
             LoginTask loginTask = new LoginTask(LoginActivity.this);
-            loginTask.setMessageLoading("Logging in...");
+            loginTask.setMessageLoading("Logando...");
             loginTask.execute(new String[] {mUserEmail, mUserPassword});
         }
     }
@@ -118,11 +118,11 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 }
-                Toast.makeText(context, "Login is sucessful!", Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Login realizado com sucesso!", Toast.LENGTH_LONG).show();
             } catch (Exception e) {
                 // something went wrong: show a Toast
                 // with the exception message
-                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(context, "Login inválido!", Toast.LENGTH_LONG).show();
             } finally {
                 super.onPostExecute(json);
             }
