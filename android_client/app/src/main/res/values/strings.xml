@@ -32,4 +32,5 @@
     <string name="hint_event_title">Title</string>
     <string name="hint_event_description">Description</string>
     <string name="category_event">Category</string>
+    <string name="event_request">Send request</string>
 </resources>

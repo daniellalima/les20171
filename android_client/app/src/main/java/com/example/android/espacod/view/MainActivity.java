@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences mPreferences;
     private Toolbar mToolbar;
     private DrawerLayout mDrawer;
+    private Bundle savedInstanceState;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         loadComponents();
         setSupportActionBar(mToolbar);
+        this.savedInstanceState = savedInstanceState;
         loadListEvents(savedInstanceState);
         setClicks();
         prepareActionBar();
@@ -70,6 +72,12 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        loadListEvents(savedInstanceState);
     }
 
     private void setClicks() {
@@ -244,7 +252,7 @@ public class MainActivity extends AppCompatActivity
                 baseJsonResponse = baseJsonResponse.put("data", new JSONArray(jsonResponse));
 
             } catch (JSONException e) {
-                Log.e(LOG_TAG, "Problem parsing the book list JSON results", e);
+                Log.e(LOG_TAG, "Problem parsing the event list JSON results", e);
             }
 
             return baseJsonResponse;
