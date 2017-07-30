@@ -11,45 +11,6 @@
     <ListView
         android:id="@+id/events_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
-
-    <LinearLayout
-        android:id="@+id/fb_menu"
-        android:orientation="vertical"
-        android:gravity="bottom|right"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="120dp"
-                android:layout_height="40dp">
-                <TextView
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="EXEMPLO"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_marginTop="16dp"
-                android:layout_width="120dp"
-                android:layout_height="40dp">
-                <TextView
-                    android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="EXEMPLO"/>
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </LinearLayout>
+        android:layout_height="match_parent"></ListView>
 
 </FrameLayout>

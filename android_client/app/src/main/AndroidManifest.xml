@@ -34,9 +34,11 @@
             android:label="@string/title_activity_register"
             android:noHistory="true" />
         <activity android:name=".view.LoginActivity" />
-        <activity android:name=".view.EventDetailActivity"
+        <activity
+            android:name=".view.EventDetailActivity"
             android:label="@string/event_detail"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity android:name=".view.EventRegisterActivity"></activity>
     </application>
 
 </manifest>

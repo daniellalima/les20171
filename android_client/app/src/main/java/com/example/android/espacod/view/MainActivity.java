@@ -1,12 +1,9 @@
 package com.example.android.espacod.view;
 
-import android.app.Activity;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,11 +17,9 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
+
 import com.example.android.espacod.R;
 import com.example.android.espacod.adapter.EventsAdapter;
 import com.example.android.espacod.model.Event;
@@ -38,7 +33,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.category;
 import static com.example.android.espacod.R.id.fab;
 
 public class MainActivity extends AppCompatActivity
@@ -47,8 +41,6 @@ public class MainActivity extends AppCompatActivity
     static final String EVENT_LIST_VALUES = "eventListValues";
 
     private FloatingActionButton mFab;
-    private boolean fb_open = false;
-    private  LinearLayout mFbMenu;
     private ListView mLvEvents;
     private List<Event> mEvents;
     private EventsAdapter mEventAdapter;
@@ -84,16 +76,8 @@ public class MainActivity extends AppCompatActivity
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(fb_open) {
-                    mFab.startAnimation(
-                            AnimationUtils.loadAnimation(MainActivity.this, R.anim.back_rotate) );
-                    mFbMenu.setVisibility(View.GONE);
-                } else {
-                    mFab.startAnimation(
-                            AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotate) );
-                    mFbMenu.setVisibility(View.VISIBLE);
-                }
-                fb_open = !fb_open;
+                Intent intent = new Intent(MainActivity.this, EventRegisterActivity.class);
+                startActivity(intent);
             }
         });
     }
@@ -111,7 +95,6 @@ public class MainActivity extends AppCompatActivity
     private void loadComponents() {
         this.mLvEvents = (ListView) findViewById(R.id.events_list);
         this.mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        this.mFbMenu = (LinearLayout) findViewById(R.id.fb_menu);
         this.mFab = (FloatingActionButton) findViewById(fab);
         this.mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         this.mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
