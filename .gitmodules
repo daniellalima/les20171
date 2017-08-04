@@ -1,0 +1,3 @@
+[submodule "espacod_api"]
+	path = espacod_api
+	url = https://github.com/samanthakem/espacod_api
