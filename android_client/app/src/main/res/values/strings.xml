@@ -33,4 +33,6 @@
     <string name="hint_event_description">Description</string>
     <string name="category_event">Category</string>
     <string name="event_request">Send request</string>
+    <string name="event_date">Date</string>
+    <string name="event_time">Time</string>
 </resources>

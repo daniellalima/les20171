@@ -42,6 +42,10 @@ public class EventRegisterActivity extends AppCompatActivity {
     private String mCategory;
     private String mTitle;
     private String mDescription;
+    private String mDate;
+    private String mTime;
+    private TextView mEventTimeField;
+    private TextView mEventDateField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,8 @@ public class EventRegisterActivity extends AppCompatActivity {
         mEventTitleField = (TextView) findViewById(R.id.register_event_title);
         mEventDescriptionField = (TextView) findViewById(R.id.register_event_description);
         mCategorySpinner = (Spinner) findViewById(R.id.spinner_category);
+        mEventTimeField = (TextView) findViewById(R.id.event_time);
+        mEventDateField = (TextView) findViewById(R.id.event_date);
         mEventRequestButton = (Button) findViewById(R.id.event_request);
         mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
 
@@ -61,8 +67,11 @@ public class EventRegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 mTitle = mEventTitleField.getText().toString();
                 mDescription = mEventDescriptionField.getText().toString();
+                mDate = mEventDateField.getText().toString();
+                mTime = mEventTimeField.getText().toString();
 
-                if (mTitle.length() == 0 || mDescription.length() == 0 || mCategory.length() == 0) {
+                if (mTitle.trim().length() == 0 || mDescription.trim().length() == 0 || mCategory.trim().length() == 0 ||
+                        mTime.trim().length() == 0 || mDate.trim().length() == 0) {
                     Toast.makeText(EventRegisterActivity.this, "Please complete all the fields", Toast.LENGTH_LONG).show();
                 } else {
                     sendEventRequest();
@@ -75,7 +84,7 @@ public class EventRegisterActivity extends AppCompatActivity {
         EventRequestTask requestTask = new EventRequestTask(EventRegisterActivity.this);
         requestTask.setMessageLoading("Enviando requisição...");
 
-        requestTask.execute(new String[] {mTitle, mDescription, mCategory});
+        requestTask.execute(new String[] {mTitle, mDescription, mCategory, mDate, mTime});
     }
 
     private void setupSpinner() {
@@ -117,6 +126,8 @@ public class EventRegisterActivity extends AppCompatActivity {
         private static final String DESCRIPTION_PARAM = "description";
         private static final String CATEGORY_PARAM = "category";
         private String TITLE_PARAM = "title";
+        private final static String DATE_PARAM = "date";
+        private final static String TIME_PARAM = "hour";
 
         public EventRequestTask(Context context) {
             super(context);
@@ -131,11 +142,15 @@ public class EventRegisterActivity extends AppCompatActivity {
             String title = params[0];
             String description = params[1];
             String category = params[2];
+            String date = params[3];
+            String time = params[4];
 
             Uri builtUri = Uri.parse(EVENT_REQUEST_API_ENDPOINT_URL).buildUpon()
                     .appendQueryParameter(TITLE_PARAM, title)
                     .appendQueryParameter(DESCRIPTION_PARAM, description)
-                    .appendQueryParameter(CATEGORY_PARAM, category).build();
+                    .appendQueryParameter(CATEGORY_PARAM, category)
+                    .appendQueryParameter(DATE_PARAM, date)
+                    .appendQueryParameter(TIME_PARAM, time).build();
 
             URL url = Util.createUrl(builtUri.toString());
 
