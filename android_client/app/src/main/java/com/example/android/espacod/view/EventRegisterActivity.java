@@ -127,7 +127,6 @@ public class EventRegisterActivity extends AppCompatActivity {
         private static final String CATEGORY_PARAM = "category";
         private String TITLE_PARAM = "title";
         private final static String DATE_PARAM = "date";
-        private final static String TIME_PARAM = "hour";
 
         public EventRequestTask(Context context) {
             super(context);
@@ -149,8 +148,7 @@ public class EventRegisterActivity extends AppCompatActivity {
                     .appendQueryParameter(TITLE_PARAM, title)
                     .appendQueryParameter(DESCRIPTION_PARAM, description)
                     .appendQueryParameter(CATEGORY_PARAM, category)
-                    .appendQueryParameter(DATE_PARAM, date)
-                    .appendQueryParameter(TIME_PARAM, time).build();
+                    .appendQueryParameter(DATE_PARAM, date + "T" + time).build();
 
             URL url = Util.createUrl(builtUri.toString());
 
