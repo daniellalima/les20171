@@ -36,4 +36,5 @@
     <string name="event_date">Date</string>
     <string name="event_time">Time</string>
     <string name="event_local">Local</string>
+    <string name="update_event_list">Update Event List</string>
 </resources>

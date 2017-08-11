@@ -171,8 +171,12 @@ public class MainActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_update) {
+            if (Util.isNetworkAvailable(this)) {
+                fetchEventsFromApi();
+            } else {
+                Util.showToast(this, getString(R.string.no_internet_connection));
+            }
         }
 
         return super.onOptionsItemSelected(item);
