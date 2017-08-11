@@ -44,8 +44,10 @@ public class EventRegisterActivity extends AppCompatActivity {
     private String mDescription;
     private String mDate;
     private String mTime;
+    private String mLocal;
     private TextView mEventTimeField;
     private TextView mEventDateField;
+    private TextView mEventLocalField;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class EventRegisterActivity extends AppCompatActivity {
         mCategorySpinner = (Spinner) findViewById(R.id.spinner_category);
         mEventTimeField = (TextView) findViewById(R.id.event_time);
         mEventDateField = (TextView) findViewById(R.id.event_date);
+        mEventLocalField = (TextView) findViewById(R.id.event_local);
         mEventRequestButton = (Button) findViewById(R.id.event_request);
         mPreferences = getSharedPreferences("CurrentUser", MODE_PRIVATE);
 
@@ -69,9 +72,10 @@ public class EventRegisterActivity extends AppCompatActivity {
                 mDescription = mEventDescriptionField.getText().toString();
                 mDate = mEventDateField.getText().toString();
                 mTime = mEventTimeField.getText().toString();
+                mLocal = mEventLocalField.getText().toString();
 
                 if (mTitle.trim().length() == 0 || mDescription.trim().length() == 0 || mCategory.trim().length() == 0 ||
-                        mTime.trim().length() == 0 || mDate.trim().length() == 0) {
+                        mTime.trim().length() == 0 || mDate.trim().length() == 0 || mLocal.trim().length() == 0) {
                     Toast.makeText(EventRegisterActivity.this, "Please complete all the fields", Toast.LENGTH_LONG).show();
                 } else {
                     sendEventRequest();
@@ -84,7 +88,7 @@ public class EventRegisterActivity extends AppCompatActivity {
         EventRequestTask requestTask = new EventRequestTask(EventRegisterActivity.this);
         requestTask.setMessageLoading("Enviando requisição...");
 
-        requestTask.execute(new String[] {mTitle, mDescription, mCategory, mDate, mTime});
+        requestTask.execute(new String[] {mTitle, mDescription, mCategory, mDate, mTime, mLocal});
     }
 
     private void setupSpinner() {
@@ -125,8 +129,9 @@ public class EventRegisterActivity extends AppCompatActivity {
         private final static String EVENT_REQUEST_API_ENDPOINT_URL = "https://infinite-bayou-64424.herokuapp.com/events";
         private static final String DESCRIPTION_PARAM = "description";
         private static final String CATEGORY_PARAM = "category";
-        private String TITLE_PARAM = "title";
+        private static final String TITLE_PARAM = "title";
         private final static String DATE_PARAM = "date";
+        private final static String LOCAL_PARAM = "local";
 
         public EventRequestTask(Context context) {
             super(context);
@@ -143,12 +148,14 @@ public class EventRegisterActivity extends AppCompatActivity {
             String category = params[2];
             String date = params[3];
             String time = params[4];
+            String local = params[5];
 
             Uri builtUri = Uri.parse(EVENT_REQUEST_API_ENDPOINT_URL).buildUpon()
                     .appendQueryParameter(TITLE_PARAM, title)
                     .appendQueryParameter(DESCRIPTION_PARAM, description)
                     .appendQueryParameter(CATEGORY_PARAM, category)
-                    .appendQueryParameter(DATE_PARAM, date + "T" + time).build();
+                    .appendQueryParameter(DATE_PARAM, date + "T" + time)
+                    .appendQueryParameter(LOCAL_PARAM, local).build();
 
             URL url = Util.createUrl(builtUri.toString());
 

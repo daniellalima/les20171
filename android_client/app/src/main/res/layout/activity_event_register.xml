@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:weightSum="6"
+        android:weightSum="7"
         android:paddingLeft="4dp"
         android:orientation="vertical">
 
@@ -48,6 +48,14 @@
                 android:layout_width="match_parent"
                 android:inputType="time"
                 android:hint="@string/event_time"/>
+
+            <EditText
+                android:id="@+id/event_local"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:inputType="text"
+                android:hint="@string/event_local"/>
 
             <Spinner
                 android:id="@+id/spinner_category"
